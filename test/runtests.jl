@@ -1,6 +1,6 @@
-using C25-challenge
+using DZIGA
 using Test
 
-@testset "C25-challenge.jl" begin
+@testset "DZIGA.jl" begin
     # Write your tests here.
 end

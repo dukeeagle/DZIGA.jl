@@ -1,4 +1,4 @@
-module C25-challenge
+module DZIGA
 
 # Write your package code here.
 
