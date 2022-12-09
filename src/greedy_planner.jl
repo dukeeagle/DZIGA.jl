@@ -10,7 +10,7 @@ using HashCode2014
 
 Greedily the greatest possible distance you can traverse for the given [`City`](@ref).
 """
-function greedy_planner(city::City) ::Solution
+function greedy_planner(city::City)::Solution
     (; total_duration, nb_cars, starting_junction, streets) = city
 
     solution = random_walk(city) # hehehe

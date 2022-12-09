@@ -76,6 +76,37 @@ end
 get_upper_bound(city)
 
 # ╔═╡ 900b52bd-9629-4bea-91d7-563aa3286212
+# a struct to represent an adjacency matrix, with {endpointA : {endpointB : (duration, distance)} as key-value pairs
+begin
+    Base.@kwdef struct CityAdjacencyMatrix
+        matrix::Dict{Int,Dict{Int,Tuple{Int,Int}}}
+    end
+
+    function CityAdjacencyMatrix(city::City)
+        matrix = Dict{Int,Dict{Int,Tuple{Int,Int}}}()
+
+        for street in city.streets
+            if !haskey(matrix, street.endpointA)
+                matrix[street.endpointA] = Dict{Int,Tuple{Int,Int}}()
+            end
+
+            matrix[street.endpointA][street.endpointB] = (street.duration, street.distance)
+        end
+
+        return CityAdjacencyMatrix(matrix)
+    end
+end
+
+# ╔═╡ c240ea8f-2336-4893-bd42-35146bdd3849
+CityAdjacencyMatrix(city)
+
+# ╔═╡ 55adb4ef-a787-44f1-97e1-d351ea4c60b1
+begin
+    small_input_path = joinpath(@__DIR__, "../test/data", "input1.txt")
+    small_city = read_city(small_input_path)
+
+    small_city
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -468,5 +499,7 @@ version = "17.4.0+0"
 # ╠═cc604a95-df34-46cc-983e-df9da5461206
 # ╠═5091d291-c0af-47f5-a9c2-a4a8a93d3abf
 # ╠═900b52bd-9629-4bea-91d7-563aa3286212
+# ╠═c240ea8f-2336-4893-bd42-35146bdd3849
+# ╠═55adb4ef-a787-44f1-97e1-d351ea4c60b1
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
