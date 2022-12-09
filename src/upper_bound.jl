@@ -1,4 +1,3 @@
-
 """
     get_upper_bound(city::City) ::Int
 

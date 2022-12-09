@@ -21,10 +21,12 @@ DocMeta.setdocmeta!(DZIGA, :DocTestSetup, :(using DZIGA); recursive=true)
         doctest(DZIGA)
     end
 
-    @testset verbose = true "Greedy plan neutral" begin
-        city = read_city(joinpath("$(@__DIR__)", "..", "paris_54000.txt"))
-
-        @test 1 + 1 == 2
+    @testset verbose = true "Greedy plan large" begin
+        city = read_city() # read large Paris dataset
+        solution = greedy_planner(city)
+        
+        @test is_feasible(solution, city)
+        @test total_distance(solution, city) <= get_upper_bound(city)
     end
 
     @testset verbose = true "Greedy plan small" begin
