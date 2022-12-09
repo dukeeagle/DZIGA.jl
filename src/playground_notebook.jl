@@ -76,7 +76,7 @@ end
 get_upper_bound(city)
 
 # ╔═╡ 900b52bd-9629-4bea-91d7-563aa3286212
-# a struct to represent an adjacency matrix, with {endpointA : {endpointB : (duration, distance)} as key-value pairs
+# a struct to represent an adjacency matrix, with {endpointA : {endpointB : (duration, distance)} as key-value pairs. 
 begin
     Base.@kwdef struct CityAdjacencyMatrix
         matrix::Dict{Int,Dict{Int,Tuple{Int,Int}}}
@@ -91,6 +91,17 @@ begin
             end
 
             matrix[street.endpointA][street.endpointB] = (street.duration, street.distance)
+
+            # if bidirectional, add the reverse street
+            if street.bidirectional
+                if !haskey(matrix, street.endpointB)
+                    matrix[street.endpointB] = Dict{Int,Tuple{Int,Int}}()
+                end
+
+                matrix[street.endpointB][street.endpointA] = (
+                    street.duration, street.distance
+                )
+            end
         end
 
         return CityAdjacencyMatrix(matrix)
@@ -98,7 +109,10 @@ begin
 end
 
 # ╔═╡ c240ea8f-2336-4893-bd42-35146bdd3849
-CityAdjacencyMatrix(city)
+begin
+    x = CityAdjacencyMatrix(city).matrix
+    x[4091]
+end
 
 # ╔═╡ 55adb4ef-a787-44f1-97e1-d351ea4c60b1
 begin
@@ -107,6 +121,9 @@ begin
 
     small_city
 end
+
+# ╔═╡ 0bca21f0-0a9b-4b23-a710-3290bb55833e
+CityAdjacencyMatrix(small_city).matrix[2][3]
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -501,5 +518,6 @@ version = "17.4.0+0"
 # ╠═900b52bd-9629-4bea-91d7-563aa3286212
 # ╠═c240ea8f-2336-4893-bd42-35146bdd3849
 # ╠═55adb4ef-a787-44f1-97e1-d351ea4c60b1
+# ╠═0bca21f0-0a9b-4b23-a710-3290bb55833e
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

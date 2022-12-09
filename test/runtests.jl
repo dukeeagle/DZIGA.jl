@@ -27,6 +27,12 @@ DocMeta.setdocmeta!(DZIGA, :DocTestSetup, :(using DZIGA); recursive=true)
 
         @test is_feasible(solution, city)
         @test total_distance(solution, city) <= get_upper_bound(city)
+
+        # generate and test adjacency matrix
+        city_matrix = CityAdjacencyMatrix(city).matrix
+
+        # based on hard-coded contents of Paris txt file
+        @test city_matrix[2015][3845] == (4, 29)
     end
 
     @testset verbose = true "Greedy plan small" begin
@@ -39,7 +45,9 @@ DocMeta.setdocmeta!(DZIGA, :DocTestSetup, :(using DZIGA); recursive=true)
         @test total_distance(solution, city) == 450
 
         # generate and test adjacency matrix
-        city_matrix = CityAdjacencyMatrix(city)
-        print("Greedy city matrix: $(city_matrix.matrix)")
+        city_matrix = CityAdjacencyMatrix(city).matrix
+
+        @test city_matrix[2][3] == (45, 200)
+        @test city_matrix[3][2] == (45, 200)
     end
 end

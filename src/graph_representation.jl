@@ -20,6 +20,15 @@ function CityAdjacencyMatrix(city::City)
         end
 
         matrix[street.endpointA][street.endpointB] = (street.duration, street.distance)
+
+        # if bidirectional, add the reverse street
+        if street.bidirectional
+            if !haskey(matrix, street.endpointB)
+                matrix[street.endpointB] = Dict{Int,Tuple{Int,Int}}()
+            end
+
+            matrix[street.endpointB][street.endpointA] = (street.duration, street.distance)
+        end
     end
 
     return CityAdjacencyMatrix(matrix)
