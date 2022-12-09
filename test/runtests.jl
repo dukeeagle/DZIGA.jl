@@ -4,6 +4,7 @@ using Test
 using Aqua
 using Documenter
 using JuliaFormatter
+using HashCode2014
 
 DocMeta.setdocmeta!(DZIGA, :DocTestSetup, :(using DZIGA); recursive=true)
 
@@ -20,7 +21,19 @@ DocMeta.setdocmeta!(DZIGA, :DocTestSetup, :(using DZIGA); recursive=true)
         doctest(DZIGA)
     end
 
-    @testset verbose = true "My own tests" begin
+    @testset verbose = true "Greedy plan neutral" begin
+        city = read_city(joinpath("$(@__DIR__)", "..", "paris_54000.txt"))
+
         @test 1 + 1 == 2
+    end
+
+    @testset verbose = true "Greedy plan small" begin
+        input_path = joinpath(@__DIR__, "data", "input1.txt")
+        output_path = joinpath(@__DIR__, "data", "output1.txt")
+        city = read_city(input_path)
+        solution = read_solution(output_path)
+
+        @test get_upper_bound(city) == 450
+        @test total_distance(solution, city) == 450
     end
 end
