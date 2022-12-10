@@ -1,19 +1,19 @@
-# Google Paris Hash Code 2014 solutions
 using HashCode2014
-
-# order of operations
-# - calculate upper bound of solution
-#   - make an easy representation of the city graph, determine greatest distance we could possibly cover given time limit (start with naive sum of all street distances, then calculate sum of maximum possible distances covered per car)
 
 """
     greedy_planner(city::City) ::Int
 
-Greedily the greatest possible distance you can traverse for the given [`City`](@ref). Best algorithm we have.
+DZGIA's state of the art planner for the HashCode 2014 challenge. Returns a `Solution` that greedily covers the greatest possible distance you can traverse for the given [`City`](@ref). Calls `greedy_bst`.
 """
 function greedy_planner(city::City)::Solution
     return greedy_bst(city)
 end
 
+"""
+    greedy_bst(city::City) ::Int
+
+Uses a best-first search to greedily generate a plan that covers the greatest possible distance you can traverse for the given [`City`](@ref) across all `City.nb_cars`.
+"""
 function greedy_bst(city::City)::Solution
     city_graph = CityGraph(city)
     visited = Dict{Int,Int}()
@@ -28,7 +28,11 @@ function greedy_bst(city::City)::Solution
     return Solution(solution)
 end
 
-# run this for each car
+"""
+    best_first_search(visited::Dict{Int,Int}, city_graph::CityGraph, city::City) ::Vector{Int}
+
+Implements best-first search with a special heuristic function. Returns an itinerary for a single car.
+"""
 function best_first_search(
     visited::Dict{Int,Int}, city_graph::CityGraph, city::City
 )::Vector{Int}
