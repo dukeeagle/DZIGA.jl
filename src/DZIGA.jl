@@ -11,9 +11,11 @@ export get_upper_bound
 export greedy_planner
 
 export CityAdjacencyMatrix
+export CityGraph
 
-include("greedy_planner.jl")
+include("graphs.jl")
 include("upper_bound.jl")
 include("graph_representation.jl")
+include("greedy_planner.jl")
 
 end
