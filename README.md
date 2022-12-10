@@ -1,4 +1,4 @@
-# DZIGA.jl : a greedy Street View car planner
+# DZIGA.jl : a greedy car route planner
 
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://dukeeagle.github.io/DZIGA.jl/stable/)
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://dukeeagle.github.io/DZIGA.jl/dev/)
@@ -11,7 +11,7 @@
 
 Julia package that contains a solver for the [Google Paris 2014 Hash Code challenge](https://storage.googleapis.com/coding-competitions.appspot.com/HC/2014/hashcode2014_final_task.pdf).
 
-Achieves 1,500,689 meters of unique distance traveled for the [Paris scenario]() via a Best-Search First algorithm with multiple heuristics. This result is approximately 76% of the theoretical upper bound.
+Achieves 1,500,689 meters of unique distance traveled for the Paris scenario via a Best-Search First algorithm with multiple heuristics. This result is approximately 76% of the theoretical upper bound.
 
-See [documentation](https://dukeeagle.github.io/DZIGA.jl/stable/).
+See [documentation](https://dukeeagle.github.io/DZIGA.jl/).
 See [final writeup](/docs/src/final_writeup.md) for full details.
