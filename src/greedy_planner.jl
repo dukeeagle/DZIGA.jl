@@ -3,7 +3,7 @@ using HashCode2014
 """
     greedy_planner(city::City) ::Int
 
-DZGIA's state of the art planner for the HashCode 2014 challenge. Returns a `Solution` that greedily covers the greatest possible distance you can traverse for the given [`City`](@ref). Calls `greedy_bst`.
+DZGIA's state of the art planner for the HashCode 2014 challenge. Returns a `Solution` that greedily covers the greatest possible distance you can traverse for the given `City`. Calls [`greedy_bst`](@ref).
 """
 function greedy_planner(city::City)::Solution
     return greedy_bst(city)
@@ -74,6 +74,11 @@ function best_first_search(
     return itinerary
 end
 
+"""
+    get_best_move(time_elapsed, visited, city, city_graph, current_junction, candidates) ::Pair{Int,Street}
+
+Returns the best move given a set of candidates. Uses a heuristic that rewards previously-unvisited streets.
+"""
 function get_best_move(
     time_elapsed, visited, city, city_graph, current_junction, candidates
 )::Pair{Int,Street}
@@ -98,6 +103,11 @@ function get_best_move(
     return Pair{Int,Street}(best_junction, best_street)
 end
 
+"""
+    get_junction_score(junction, street, city_graph, visited, total_duration, time_elapsed) ::Number
+
+Implementation of the heuristic function f(x) that rewards previously-unvisited streets and penalizes time-consuming streets, as described more fully in the final writeup. Returns the heuristic score of input `junction`. 
+"""
 function get_junction_score(
     junction::Int,
     street::Street,
@@ -109,7 +119,6 @@ function get_junction_score(
     # reward things that haven't been visited yet
     score = street.distance
     duration_per_distance = street.duration / street.distance
-    time_remaining = total_duration - time_elapsed
 
     # add bonus for longer streets
     score += 0.5 * street.distance

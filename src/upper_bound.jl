@@ -1,8 +1,8 @@
 """
     get_upper_bound(city::City) ::Int
 
-Return the greatest possible distance you can traverse for the given [`City`](@ref) by summing the longest streets first.
- """
+Return the greatest possible distance you can traverse for the given [`City`](@ref) by summing the longest streets first. The summing concludes once the total duration of the streets exceeds the total duration of the simulation * total number of cars in the `City`.
+"""
 function get_upper_bound(city::City)::Int
     (; total_duration, nb_cars, starting_junction, streets) = city
 

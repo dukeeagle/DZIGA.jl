@@ -1,27 +1,21 @@
-# a struct to represent the city graph in multiple ways, with {endpointA : {endpointB : (duration, distance)} as key-value pairs. 
-
-# also get hash table of junctions by junction id (instead of inefficient lookup)
-
 """
     CityGraph
 
-story a city as a graph adjacency matrix for easy traversal.  Given a ['City'](@ref), produce a `matrix` dictionary with {endpointA : {endpointB : (duration, distance)} as key-value pairs. Also create an `edges` vector of tuples of (endpointA, endpointB) for easy traversal.
+Store the junctions and streets of a `City` as an adjacency matrix for easy traversal and lookup.  Given a 'City', produce a `adj_matrix` adjacency matrix dictionary with {endpointA : {endpointB : Street}} as key-value pairs. Also hashes all `Junction` objects in the city by id (and vice versa) for easy lookup.
     
 # Fields
-- `matrix::Dict{Int,Dict{Int,Tuple{Int,Int}}}`: a dictionary of dictionaries where the first key is the starting junction and the second key is the ending junction. The value is a tuple of the duration and distance of the street.
-- `edges::Vector{Tuple{Int,Int}}`: a vector of tuples of the starting and ending junctions of the street.
-
+- `matrix::Dict{Int,Dict{Int,Street}} a dictionary of dictionaries where the first key is the starting junction and the ending junction, which maps to the `Street` value.
+- `ids_to_junctions::Dict{Int,Junction}` a dictionary of `Junction`s by junction id
+- `junctions_to_ids::Dict{Junction,Int}` a dictionary of junction ids by `Junction`
 """
 Base.@kwdef struct CityGraph
     adj_matrix::Dict{Int,Dict{Int,Street}}
-    # edges::Vector{Tuple{Int,Int}}
     ids_to_junctions::Dict{Int,Junction}
     junctions_to_ids::Dict{Junction,Int}
 end
 
 function CityGraph(city::City)
     adj_matrix = Dict{Int,Dict{Int,Street}}()
-    edges = Vector{Tuple{Int,Int,Int,Int}}()
 
     ids_to_junctions = Dict{Int,Junction}()
     junctions_to_ids = Dict{Junction,Int}()
