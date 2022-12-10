@@ -6,7 +6,7 @@ The goal of the Google Hashcode 2014 challenge is to choose a route for $n$ Goog
 
 In the canonical dataset given for this challenge, we are asked to plan for 8 cars traveling across the streets of Paris for 54000 seconds (15 hours).
 
-DZIGA.jl is a Julia package that can solve this challenge through the function `DZIGA.greedy_planner(city::City)`. This input `City` struct and output `Solution` struct come from Guillaume Dalle's [HashCode2014.jl](https://github.com/gdalle/HashCode2014.jl) package.
+DZIGA.jl is a Julia package that can solve this challenge through the function `DZIGA.greedy_planner(city::City)`. This input `City` struct and output `Solution` struct come from Guillaume Dalle's [HashCode2014.jl](https://github.com/gdalle/HashCode2014.jl) package. See the full docs here.
 
 ## DZIGA's greedy planning algorithm
 

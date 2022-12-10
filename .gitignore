@@ -5,4 +5,4 @@
 /docs/build/
 *.code-workspace
 *.CondaPkg
-playground_notebook.jl
+src/playground_notebook.jl
