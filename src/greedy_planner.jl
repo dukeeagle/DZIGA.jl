@@ -46,15 +46,21 @@ function best_first_search(
             break
         end
 
-        best_pair = get_best_move(
+        next_junction, next_street = get_best_move(
             t, visited, city, city_graph, current_junction_id, candidates
         ) # use heuristic here
-        if best_pair == nothing
+
+        # ensure we don't go over time
+        if t + next_street.duration >= total_duration
             break
         end
-        next_junction, next_street = best_pair
 
         # update visited cache
+        if next_junction in keys(visited)
+            visited[next_junction] += 1
+        else
+            visited[next_junction] = 1
+        end
 
         # update time and itinerary
         push!(itinerary, next_junction)
@@ -65,21 +71,52 @@ function best_first_search(
 end
 
 function get_best_move(
-    time_elapsed, visited, city, city_matrix, current_junction, candidates
-) #::Pair{Junction,Street}
-    # filter
-    candidates = [
-        candidate for candidate in candidates if
-        (time_elapsed + candidate[2].duration <= city.total_duration)
-    ]
+    time_elapsed, visited, city, city_graph, current_junction, candidates
+)::Pair{Int,Street}
+    # use a heuristic that rewards previously-unvisited streets
 
-    if length(candidates) == 0
-        return nothing
+    # initialize scores
+    best_junction, best_street = first(candidates)
+    # print(best_street)
+    best_score = 0
+
+    for (junction, street) in candidates
+        junction_score = get_junction_score(
+            junction, street, city_graph, visited, city.total_duration, time_elapsed
+        )
+        if junction_score > best_score
+            best_junction = junction
+            best_street = street
+            best_score = junction_score
+        end
     end
-    best_pair = rand(candidates)
-
-    best_street = best_pair[2]
-    best_junction = best_pair[1]
 
     return Pair{Int,Street}(best_junction, best_street)
+end
+
+function get_junction_score(
+    junction::Int,
+    street::Street,
+    city_graph::CityGraph,
+    visited::Dict{Int,Int},
+    total_duration::Int,
+    time_elapsed::Number,
+)::Number
+    # reward things that haven't been visited yet
+    score = street.distance
+    duration_per_distance = street.duration / street.distance
+    time_remaining = total_duration - time_elapsed
+
+    # add bonus for longer streets
+    score += 0.5 * street.distance
+    # penalize longer duration per unit distance
+    score -= 0.1 * duration_per_distance
+
+    if !(junction in keys(visited))
+        visited_term = 0
+    else
+        visited_term = visited[junction]
+    end
+
+    return score * (0.05^visited_term)
 end
