@@ -58,6 +58,5 @@ DocMeta.setdocmeta!(DZIGA, :DocTestSetup, :(using DZIGA); recursive=true)
         solution = greedy_planner(city)
         @test is_feasible(solution, city)
         @test total_distance(solution, city) <= get_upper_bound(city)
-
     end
 end
