@@ -1,4 +1,4 @@
-# DZIGA.jl : a package that  greedily solves for the Google Hashcode 2014 challenge
+# DZIGA.jl : a package that  greedily solves the Google Hashcode 2014 challenge
 > for the MIT class 6.S083/C25, or [Julia: Solving Real-World Problems with Computation, Fall 2022
 ](https://github.com/mitmath/JuliaComputation)
 
